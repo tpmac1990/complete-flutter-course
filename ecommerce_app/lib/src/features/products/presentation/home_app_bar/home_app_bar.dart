@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/src/constants/breakpoints.dart';
 import 'package:ecommerce_app/src/features/authentication/data/fake_auth_repository.dart';
+import 'package:ecommerce_app/src/features/products/presentation/home_app_bar/map_icon.dart';
 import 'package:ecommerce_app/src/features/products/presentation/home_app_bar/more_menu_button.dart';
 import 'package:ecommerce_app/src/features/products/presentation/home_app_bar/shopping_cart_icon.dart';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
@@ -33,6 +34,7 @@ class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
       return AppBar(
         title: Text('My Shop'.hardcoded),
         actions: [
+          const MapIcon(),
           const ShoppingCartIcon(),
           MoreMenuButton(user: user),
         ],

@@ -4,6 +4,7 @@ import 'package:ecommerce_app/src/features/authentication/presentation/sign_in/e
 import 'package:ecommerce_app/src/features/authentication/presentation/sign_in/email_password_sign_in_screen.dart';
 import 'package:ecommerce_app/src/features/cart/presentation/shopping_cart/shopping_cart_screen.dart';
 import 'package:ecommerce_app/src/features/checkout/presentation/checkout_screen/checkout_screen.dart';
+import 'package:ecommerce_app/src/features/map/presentation/map_view.dart';
 import 'package:ecommerce_app/src/features/orders/presentation/orders_list/orders_list_screen.dart';
 import 'package:ecommerce_app/src/features/products/presentation/product_screen/product_screen.dart';
 import 'package:ecommerce_app/src/features/products/presentation/products_list/products_list_screen.dart';
@@ -25,6 +26,7 @@ enum AppRoute {
   orders,
   account,
   signIn,
+  map,
 }
 
 @Riverpod(keepAlive: true)
@@ -117,6 +119,14 @@ GoRouter goRouter(GoRouterRef ref) {
               child: EmailPasswordSignInScreen(
                 formType: EmailPasswordSignInFormType.signIn,
               ),
+            ),
+          ),
+          GoRoute(
+            path: 'map',
+            name: AppRoute.map.name,
+            pageBuilder: (context, state) => const MaterialPage(
+              fullscreenDialog: true,
+              child: MapViewScreen(),
             ),
           ),
         ],
