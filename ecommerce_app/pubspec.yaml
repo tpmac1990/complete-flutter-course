@@ -23,6 +23,8 @@ dependencies:
   sembast: 3.5.0+1
   sembast_web: 2.2.0
   path_provider: 2.1.1
+  google_maps_flutter: ^2.5.0
+  # flutter_config: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -60,4 +62,5 @@ flutter:
   assets:
     # Add all product images
     - assets/products/
+    - .env
 
