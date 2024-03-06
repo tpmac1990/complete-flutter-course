@@ -2,6 +2,7 @@ import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
+import 'package:ecommerce_app/src/constants/app_sizes.dart';
 
 class MapViewScreen extends StatefulWidget {
   const MapViewScreen({Key? key}) : super(key: key);
@@ -30,8 +31,12 @@ class _MapViewScreenState extends State<MapViewScreen> {
     bearing: 192.8334901395799,
     target: LatLng(37.43296265331129, -122.08832357078792),
     tilt: 59.440717697143555,
-    zoom: 10.0,
+    zoom: 14.0,
   );
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +46,16 @@ class _MapViewScreenState extends State<MapViewScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: GoogleMap(
+          // double tab to zoom
+          zoomGesturesEnabled: true,
+          // tilt camera
+          tiltGesturesEnabled: true,
+          // rotate camera
+          rotateGesturesEnabled: true,
+          // 
+          scrollGesturesEnabled: true,
+          // the plus/minus zoom buttons
+          zoomControlsEnabled: false,
           initialCameraPosition: _kGooglePlex,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
@@ -50,13 +65,19 @@ class _MapViewScreenState extends State<MapViewScreen> {
               _currentCameraPosition = position;
             });
           },
-          mapType: MapType.normal, // Ensure map type is normal
+          mapType: MapType.normal, // hybrid
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: Sizes.p24, bottom: Sizes.p16),
+          child: FloatingActionButton.extended(
+            onPressed: _goToTheLake,
+            label: const Text('To the lake!'),
+            icon: const Icon(Icons.directions_boat),
+          ),
+        ),
       ),
     );
   }
