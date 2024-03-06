@@ -14,6 +14,7 @@ class MapViewScreen extends StatefulWidget {
 class _MapViewScreenState extends State<MapViewScreen> {
   late final Completer<GoogleMapController> _controller;
   late CameraPosition _currentCameraPosition;
+  Set<Marker> markers = {};
 
   @override
   void initState() {
@@ -34,8 +35,25 @@ class _MapViewScreenState extends State<MapViewScreen> {
     zoom: 14.0,
   );
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _addMarker() {
+    setState(() {
+      markers.add(const Marker(
+        markerId: MarkerId('marker1'),
+        position: LatLng(37.43296265331129, -122.08832357078792),
+        infoWindow: InfoWindow(title: 'San Francisco'),
+      ));
+    });
+  }
+
+  void _onMapCreated(GoogleMapController controller){
     _controller.complete(controller);
+    _addMarker();
+  }
+
+  void _onCameraMove(CameraPosition position) {
+    setState(() {
+      _currentCameraPosition = position;
+    });
   }
 
   @override
@@ -46,26 +64,19 @@ class _MapViewScreenState extends State<MapViewScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: GoogleMap(
-          // double tab to zoom
           zoomGesturesEnabled: true,
-          // tilt camera
           tiltGesturesEnabled: true,
-          // rotate camera
           rotateGesturesEnabled: true,
-          // 
           scrollGesturesEnabled: true,
-          // the plus/minus zoom buttons
           zoomControlsEnabled: false,
+          compassEnabled: true,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
           initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-          onCameraMove: (CameraPosition position) {
-            setState(() {
-              _currentCameraPosition = position;
-            });
-          },
-          mapType: MapType.normal, // hybrid
+          onMapCreated: _onMapCreated,
+          onCameraMove: _onCameraMove,
+          markers: markers,
+          mapType: MapType.normal, // hybrid, satellite, terrain
         ),
       ),
       floatingActionButton: Align(
