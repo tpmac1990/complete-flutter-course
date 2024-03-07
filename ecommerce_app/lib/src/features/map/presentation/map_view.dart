@@ -17,6 +17,8 @@ class _MapViewScreenState extends State<MapViewScreen> {
   late final Completer<GoogleMapController> _controller;
   late CameraPosition _currentCameraPosition;
   Set<Marker> markers = {};
+  bool isMarkerClicked = false;
+  String clickedMarkerID = '';
 
   @override
   void initState() {
@@ -63,8 +65,14 @@ class _MapViewScreenState extends State<MapViewScreen> {
       markers.add(Marker(
         markerId: const MarkerId('marker1'),
         position: const LatLng(37.43296265331129, -122.08832357078792),
-        infoWindow: const InfoWindow(title: 'San Francisco'),
+        // infoWindow: const InfoWindow(title: 'San Francisco'),
         icon: BitmapDescriptor.fromBytes(markerIcon),
+        onTap: () {
+          setState(() {
+            clickedMarkerID = 'marker1';
+            isMarkerClicked = !isMarkerClicked;
+          });
+        }
       ));
     });
   }
@@ -84,24 +92,49 @@ class _MapViewScreenState extends State<MapViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Map')),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: GoogleMap(
-          zoomGesturesEnabled: true,
-          tiltGesturesEnabled: true,
-          rotateGesturesEnabled: true,
-          scrollGesturesEnabled: true,
-          zoomControlsEnabled: false,
-          compassEnabled: true,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: false,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: _onMapCreated,
-          onCameraMove: _onCameraMove,
-          markers: markers,
-          mapType: MapType.normal, // hybrid, satellite, terrain
-        ),
+      body: Stack(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: GoogleMap(
+              zoomGesturesEnabled: true,
+              tiltGesturesEnabled: true,
+              rotateGesturesEnabled: true,
+              scrollGesturesEnabled: true,
+              zoomControlsEnabled: false,
+              compassEnabled: true,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: false,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: _onMapCreated,
+              onCameraMove: _onCameraMove,
+              markers: markers,
+              mapType: MapType.normal, // hybrid, satellite, terrain
+              onTap: (LatLng latLng) {
+                setState(() {
+                  isMarkerClicked = false;
+                });
+              }
+            ),
+          ),
+          if (isMarkerClicked)
+            Positioned(
+              bottom: 100,
+              left: 5,
+              right: 5,
+              child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Bottom Sheet Content $clickedMarkerID',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+            ),
+        ]
       ),
       floatingActionButton: Align(
         alignment: Alignment.bottomLeft,
