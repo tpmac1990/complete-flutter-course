@@ -61,9 +61,9 @@ class _MapViewScreenState extends State<MapViewScreen> {
     final Uint8List markerIcon = await _svgToPng();
     setState(() {
       markers.add(Marker(
-        markerId: MarkerId('marker1'),
-        position: LatLng(37.43296265331129, -122.08832357078792),
-        infoWindow: InfoWindow(title: 'San Francisco'),
+        markerId: const MarkerId('marker1'),
+        position: const LatLng(37.43296265331129, -122.08832357078792),
+        infoWindow: const InfoWindow(title: 'San Francisco'),
         icon: BitmapDescriptor.fromBytes(markerIcon),
       ));
     });
