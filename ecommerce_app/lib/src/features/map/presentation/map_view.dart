@@ -38,10 +38,10 @@ class _MapViewScreenState extends State<MapViewScreen> {
   );
 
   final String svgString = '''
-    <svg version="1.1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <g transform="translate(-32 -32)">
-        <circle cx="64" cy="64" r="32" fill="#fff"/>
-        <circle cx="64" cy="64" r="26" fill="#0eae00"/>
+    <svg version="1.1" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(-35 -35)">
+        <circle cx="70" cy="70" r="35" fill="#fff"/>
+        <circle cx="70" cy="70" r="28" fill="#0eae00"/>
       </g>
     </svg>
   ''';
@@ -51,7 +51,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
     canvas.drawPicture(pictureInfo.picture);
-    final ui.Image image = await pictureInfo.picture.toImage(64, 64);
+    final ui.Image image = await pictureInfo.picture.toImage(70, 70);
     final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     pictureInfo.picture.dispose();
     return byteData!.buffer.asUint8List();
@@ -83,7 +83,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Map'.hardcoded)),
+      appBar: AppBar(title: const Text('Map')),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
