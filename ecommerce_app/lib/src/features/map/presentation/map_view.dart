@@ -19,6 +19,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
   Set<Marker> markers = {};
   bool isMarkerClicked = false;
   String clickedMarkerID = '';
+  List<int> text = [1, 2, 3, 4, 5, 6, 7];
 
   @override
   void initState() {
@@ -116,6 +117,38 @@ class _MapViewScreenState extends State<MapViewScreen> {
                   isMarkerClicked = false;
                 });
               }
+            ),
+          ),
+          Positioned(
+            top: 10,
+            left: 0,
+            right: 0,
+            child: Container(
+              color: Colors.transparent,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for ( var i in text )
+                      Padding(
+                        padding: const EdgeInsets.all(10.0), // Add margin of 10.0 to all sides
+                        child: Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                            child: Text(
+                              'child $i', // Concatenate 'i' with the string
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
           if (isMarkerClicked)
