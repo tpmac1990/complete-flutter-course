@@ -1,8 +1,10 @@
-import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
+import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:async';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ecommerce_app/src/constants/app_sizes.dart';
+import 'dart:ui' as ui;
 
 class MapViewScreen extends StatefulWidget {
   const MapViewScreen({Key? key}) : super(key: key);
@@ -35,12 +37,34 @@ class _MapViewScreenState extends State<MapViewScreen> {
     zoom: 14.0,
   );
 
-  void _addMarker() {
+  final String svgString = '''
+    <svg version="1.1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(-32 -32)">
+        <circle cx="64" cy="64" r="32" fill="#fff"/>
+        <circle cx="64" cy="64" r="26" fill="#0eae00"/>
+      </g>
+    </svg>
+  ''';
+
+  Future<Uint8List> _svgToPng() async {
+    final PictureInfo pictureInfo = await vg.loadPicture(SvgStringLoader(svgString), null);
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder);
+    canvas.drawPicture(pictureInfo.picture);
+    final ui.Image image = await pictureInfo.picture.toImage(64, 64);
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    pictureInfo.picture.dispose();
+    return byteData!.buffer.asUint8List();
+  }
+
+  void _addMarker() async {
+    final Uint8List markerIcon = await _svgToPng();
     setState(() {
-      markers.add(const Marker(
+      markers.add(Marker(
         markerId: MarkerId('marker1'),
         position: LatLng(37.43296265331129, -122.08832357078792),
         infoWindow: InfoWindow(title: 'San Francisco'),
+        icon: BitmapDescriptor.fromBytes(markerIcon),
       ));
     });
   }
