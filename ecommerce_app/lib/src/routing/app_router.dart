@@ -9,6 +9,7 @@ import 'package:ecommerce_app/src/features/orders/presentation/orders_list/order
 import 'package:ecommerce_app/src/features/products/presentation/product_screen/product_screen.dart';
 import 'package:ecommerce_app/src/features/products/presentation/products_list/products_list_screen.dart';
 import 'package:ecommerce_app/src/features/reviews/presentation/leave_review_screen/leave_review_screen.dart';
+import 'package:ecommerce_app/src/features/star/presentation/star_view.dart';
 import 'package:ecommerce_app/src/routing/go_router_refresh_stream.dart';
 import 'package:ecommerce_app/src/routing/not_found_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ enum AppRoute {
   account,
   signIn,
   map,
+  star,
 }
 
 @Riverpod(keepAlive: true)
@@ -127,6 +129,14 @@ GoRouter goRouter(GoRouterRef ref) {
             pageBuilder: (context, state) => const MaterialPage(
               fullscreenDialog: true,
               child: MapViewScreen(),
+            ),
+          ),
+          GoRoute(
+            path: 'star',
+            name: AppRoute.star.name,
+            pageBuilder: (context, state) => const MaterialPage(
+              fullscreenDialog: true,
+              child: StarViewScreen(),
             ),
           ),
         ],
