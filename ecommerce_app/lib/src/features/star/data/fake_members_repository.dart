@@ -1,20 +1,44 @@
-import 'package:ecommerce_app/src/features/star/domain/member.dart';
-import 'package:ecommerce_app/src/utils/in_memory_store.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'fake_members_repository.g.dart';
 
-class FakeMembersRepository {
-  FakeMembersRepository();
+@riverpod
+class Counter extends _$Counter {
+  @override
+  int build() {
+    return 0;
+  }
 
-  final _member = InMemoryStore<Member?>(null);
-
-  set currentMember(Member? newMember) => _member.value = newMember;
-
-  Member? get currentMember => _member.value;
+  void increment() {
+    state++;
+  }
 }
 
 @riverpod
-FakeMembersRepository membersRepository(MembersRepositoryRef ref) {
-  return FakeMembersRepository();
+class Member extends _$Member {
+  @override
+  String build() {
+    return 'john';
+  }
+
+  void setName(name) {
+    state = name;
+  }
+}
+
+@riverpod
+class Bams extends _$Bams {
+  @override
+  Map<String, dynamic> build() {
+    return {
+      'name': 'frank',
+      'age': 88,
+    };
+  }
+
+  void setName(name) {
+    state = {...state,
+      'name': 'kelly',
+    };
+  }
 }

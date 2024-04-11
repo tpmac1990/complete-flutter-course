@@ -1,9 +1,6 @@
 import 'package:ecommerce_app/src/features/star/data/fake_members_repository.dart';
-import 'package:ecommerce_app/src/features/star/domain/member.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-// part 'star_view.g.dart';
 
 
 class StarViewScreen extends ConsumerWidget {
@@ -12,14 +9,35 @@ class StarViewScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final member = ref.watch(membersRepositoryProvider);
-    final memberNow = member.currentMember?.name ?? 'mike';
-
-    ref.read(membersRepositoryProvider).currentMember = const Member(id: 94, name: 'john', hobby: Hobby.running);
+    // final counter = ref.watch(counterProvider);
+    // final memberName = ref.watch(memberProvider);
+    final bamsName = ref.watch(bamsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Star')),
-      body: Center(child: Text(memberNow)),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                // 'Value: $counter',
+                // memberName,
+                bamsName['name'],
+                style: const TextStyle(fontSize: 24),
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // ref.read(counterProvider.notifier).increment();
+              // ref.read(memberProvider.notifier).setName('kelly');
+              ref.read(bamsProvider.notifier).setName('kelly');
+            },
+            child: const Text('Click Me'),
+          ),
+        ],
+      ),
     );
   }
 }
