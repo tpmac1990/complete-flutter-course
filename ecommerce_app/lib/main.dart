@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore:depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
-// import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +34,8 @@ void main() async {
   // * Register error handlers. For more info, see:
   // * https://docs.flutter.dev/testing/errors
   registerErrorHandlers(errorLogger);
+  // load env variables
+  await FlutterConfig.loadEnvVariables();
   // * Entry point of the app
   runApp(UncontrolledProviderScope(
     container: container,

@@ -262,6 +262,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_config:
+    dependency: "direct dev"
+    description:
+      path: "."
+      ref: "90bbf3c"
+      resolved-ref: "90bbf3c9531e0d2e468f55c807b27e9cb7dc9d04"
+      url: "https://github.com/egonm12/flutter_config.git"
+    source: git
+    version: "2.0.2"
   flutter_driver:
     dependency: transitive
     description: flutter
