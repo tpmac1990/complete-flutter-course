@@ -11,7 +11,6 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
-    print(FlutterConfig.get('GOOGLE_MAPS_API_KEY'));
     return MaterialApp.router(
       routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
